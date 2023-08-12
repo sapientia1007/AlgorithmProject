@@ -1,3 +1,4 @@
+# Counter.... 복습 필요
 from collections import Counter
 
 diceNum = input().split()
