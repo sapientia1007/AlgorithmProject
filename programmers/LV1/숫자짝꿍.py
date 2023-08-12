@@ -1,7 +1,8 @@
 def solution(X, Y):
     answer = ''
     for i in range(9, -1, -1) :
-        for _ in range(min(str(X).count(str(i)), str(Y).count(str(i)))) :
+        for _ in range(min(str(X).count(str(i)),
+                           str(Y).count(str(i)))) :
             answer += str(i)
     if list(set(answer)) == ['0'] :
         answer = '0'
