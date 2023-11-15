@@ -1,3 +1,5 @@
+# 입출력 속도 비교 : sys.stdin.readline > raw_input() > input()
+
 import sys
 n = int(sys.stdin.readline())
 stack = []
