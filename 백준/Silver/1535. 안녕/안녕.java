@@ -21,7 +21,7 @@ public class Main {
 
 		for (int i=0; i<N; i++) {
 			for (int j=100; j>Lost[i]; j--){
-				dp[j] = Math.max(dp[j], dp[j-Lost[i]]+Get[i]);
+				dp[j] = Math.max(dp[j], Get[i]+dp[j-Lost[i]]);
 			}
 		}
 		System.out.println(dp[100]);
