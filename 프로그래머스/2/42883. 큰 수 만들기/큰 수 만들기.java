@@ -20,7 +20,7 @@ class Solution {
 
                 answer.append(maxNum);
                 idx = maxIdx + 1;
-                k -= maxIdx - (idx - 1);
+                k-=1;
             }
 
             return answer.toString();
