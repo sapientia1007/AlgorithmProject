@@ -1,31 +1,17 @@
-import java.util.*;
 class Solution {
+        static int answer = 0;
         public int solution(int[] numbers, int target) {
-            int answer = 0;
-            // 결과를 담는 q -> BFS 방식 사용
-            ArrayDeque<int[]> q = new ArrayDeque<>();
-
-            // 일단 첫번째 값에 대해 +, - 결과 추가
-            q.offer(new int[] {numbers[0], 0});
-            q.offer(new int[] {-numbers[0], 0});
-
-            // BFS 탐색
-            while (!q.isEmpty()) {
-                int[] current = q.poll();
-                int sum = current[0];
-                int curIdx = current[1];
-
-                if (curIdx == numbers.length - 1) { // 마지막 검사를 했을때
-                    if (sum == target) {
-                        answer++;
-                    }
-                } else {
-                    int nextIdx = curIdx + 1; // 다음 숫자에 대해 +, - 결과 추가
-                    q.offer(new int[]{sum + numbers[nextIdx], nextIdx});
-                    q.offer(new int[]{sum - numbers[nextIdx], nextIdx});
-                }
-            }
-
+            answer = 0;
+            dfs(numbers,target,0,0);
             return answer;
+        }
+
+        public void dfs(int[] numbers, int target, int idx, int sum) { // 모든 경우를 탐색하기 위한 dfs
+            if (idx == numbers.length){ // numbers 배열 끝에 인덱스가 도달했으면
+                if (target == sum) answer++; // 협재 합이 타겟과 일치하면 경우의 수 증가 
+                return; // 탐색 종료
+            }
+            dfs(numbers, target, idx+1, sum+numbers[idx]); // 현재 수 더하기
+            dfs(numbers, target, idx+1, sum-numbers[idx]); // 현재 수 뺴기
         }
     }
