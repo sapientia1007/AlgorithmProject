@@ -1,51 +1,45 @@
-
 import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int A, B;
     static boolean[] v;
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        A = Integer.parseInt(st.nextToken()); // 수빈
-        B = Integer.parseInt(st.nextToken()); // 동생
-        v = new boolean[100001];
-        ArrayDeque<int[]> q = new ArrayDeque<>(); // [현재위치, 이동횟수]
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        v = new boolean[100_001];
 
-        // 수빈이가 갈 수 있는 장소는 +1/-1/*2
-        q.offer(new int[]{A, 0});
+        int N = Integer.parseInt(st.nextToken()); int K = Integer.parseInt(st.nextToken());
 
-        while(!q.isEmpty()){
+        int result = bfs(N, K);
+        System.out.println(result);
+        br.close();
+    }
+
+    public static int bfs(int start, int target) {
+        ArrayDeque<int[]> q = new ArrayDeque<>(); // [위치, 경과 시간]
+        q.add(new int[]{start, 0});
+        v[start] = true;
+
+        while (!q.isEmpty()){
             int[] current = q.poll();
-            int currentPosition = current[0]; int currentStep = current[1];
+            int position = current[0];
+            int time = current[1];
 
-            if (currentPosition == B) {
-                System.out.println(currentStep);
-                break;
+            if (position == target) return time;
+
+            if (position-1 >= 0 && !v[position-1]) {
+                q.add(new int[] {position-1, time+1});
+                v[position-1] = true;
             }
-
-
-            // +1로 이동
-            int nextPositionPlus = currentPosition+1;
-            if (nextPositionPlus <= 100000 && !v[nextPositionPlus]){
-                v[nextPositionPlus] = true;
-                q.offer(new int[] {nextPositionPlus, currentStep+1});
+            if (position+1 <= 100_000&& !v[position+1]) {
+                q.add(new int[] {position+1, time+1});
+                v[position+1] = true;
             }
-
-            // -1로 이동
-            int nextPositionMinus = currentPosition-1;
-            if (0<=nextPositionMinus && !v[nextPositionMinus]){
-                v[nextPositionMinus] = true;
-                q.offer(new int[] {nextPositionMinus, currentStep+1});
-            }
-
-            // 2배 장소로 이동
-            int nextPositionTwice = currentPosition*2;
-            if (nextPositionTwice<=100000 && !v[nextPositionTwice]){
-                v[nextPositionTwice] = true;
-                q.offer(new int[] {nextPositionTwice, currentStep+1});
+            if (position*2 >= 0 &&  position*2 <= 100_000 && !v[position*2]) {
+                q.add(new int[] {position*2, time+1});
+                v[position*2] = true;
             }
         }
+        return -1;
     }
 }
