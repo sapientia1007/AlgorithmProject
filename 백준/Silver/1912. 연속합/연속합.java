@@ -1,25 +1,30 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    static int[] arr ;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine()); arr = new int[n];
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i=0; i<n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken()); // 배열 저장
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int[] dp = new int[n]; // 합 배열
+        int[] dp = new int[n];
         dp[0] = arr[0];
 
         for (int i=1; i<n; i++) {
-            dp[i] = Math.max(dp[i-1] + arr[i], arr[i]);
+            dp[i] = Math.max(arr[i], dp[i-1]+arr[i]);
         }
 
-        System.out.println(Arrays.stream(dp).max().getAsInt());
-
+        int maxNum = dp[0];
+        for (int i=1; i<n; i++) {
+            maxNum = Math.max(dp[i], maxNum);
+        }
+        
+        System.out.println(maxNum);
         br.close();
     }
 }
