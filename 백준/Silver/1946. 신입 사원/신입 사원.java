@@ -4,6 +4,8 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
         int T = Integer.parseInt(br.readLine()); // 테스트 갯수
         for (int i = 0; i < T; i++) {
             int N = Integer.parseInt(br.readLine()); // 지원자 수
@@ -29,8 +31,9 @@ public class Main {
                     minScore = apply[j][1];
                 }
             }
-            System.out.println(count);
+            bw.write(count + "\n");
         }
+        bw.close();
         br.close();
     }
 }
