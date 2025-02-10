@@ -1,15 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-/* 입력
-    N : 큐의 크기 / M : 뽑아내려고 하는 수의 개수
-    지민이가 뽑아내려고 하는 수의 위치가 순서대로
-
-    ex) 1 2 3 4 5 6 7 8 9 10 // 1 2 3
-
- */
 public class Main {
+    
     static int N; static int M; static int count = 0;
+    
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
