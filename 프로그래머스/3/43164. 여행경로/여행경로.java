@@ -3,6 +3,7 @@ import java.util.*;
 class Solution {
         boolean[] v;
         ArrayList<String> allRoute;
+    
         public String[] solution(String[][] tickets) {
             String[] answer = {};
             v = new boolean[tickets.length]; // 사용 처리 배열
@@ -16,12 +17,14 @@ class Solution {
 
             return answer;
         }
+    
         public void dfs(String start, String route, String[][] tickets, int cnt){
             // 모든 항공권을 사용한 경우(탐색 완료)
             if (cnt == tickets.length){
                 allRoute.add(route); // 현재 경로 추가
                 return; // 재귀 호출 종료
             }
+            
             // 주어진 항공권들을 순회하며 경로 탐색
             for (int i=0; i<tickets.length; i++){
                 // 현재 출발지가 항공권의 출발지와 같고, 해당 항공권을 아직 사용하지 않은 경우
