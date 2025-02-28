@@ -1,13 +1,12 @@
 import java.io.*;
 import java.util.*;
 
-/*다이나믹 프로그래밍으로 처리*/
 public class Main {
 	static int N; 
 	static int[][] dp;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		N = Integer.parseInt(br.readLine()); // 테스트케이스 
+		N = Integer.parseInt(br.readLine()); 
 		dp = new int[41][2];
 		dp[0][0] = 1;
 		dp[0][1] = 0;
