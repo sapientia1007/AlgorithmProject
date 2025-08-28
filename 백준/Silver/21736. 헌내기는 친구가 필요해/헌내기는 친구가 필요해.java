@@ -7,7 +7,7 @@ class Main {
     static int[] dx = new int[] {-1,0,1,0};
     static int[] dy = new int[] {0,1,0,-1};
     static boolean[][] v ;
-    static String[][] arr;
+    static char[][] arr;
     static int p ;
     static int N, M;
 
@@ -18,12 +18,12 @@ class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        arr = new String[N][M];
+        arr = new char[N][M];
         v = new boolean[N][M];
         p = 0;
 
         for (int i=0; i<N; i++) {
-            String[] inpt = br.readLine().split("");
+            char[] inpt = br.readLine().toCharArray();
             for (int j=0; j<M; j++) {
                 arr[i][j] = inpt[j];
             }
@@ -31,7 +31,7 @@ class Main {
 
         for (int i=0; i<N; i++) {
             for (int j=0; j<M; j++) {
-                if (arr[i][j].equals("I")) bfs(i,j);
+                if (arr[i][j] == 'I') bfs(i,j);
             }
         }
 
@@ -52,9 +52,9 @@ class Main {
                 int nx = i+dx[d];
                 int ny = j+dy[d];
 
-                if (0<=nx && nx<N && 0<=ny && ny<M && !v[nx][ny] && !arr[nx][ny].equals("X")) {
+                if (0<=nx && nx<N && 0<=ny && ny<M && !v[nx][ny] && arr[nx][ny] != 'X') {
                     v[nx][ny] = true;
-                    if (arr[nx][ny].equals("P")) p += 1;
+                    if (arr[nx][ny] == 'P') p += 1;
                     q.offer(new int[] {nx, ny});
                 } 
             }
