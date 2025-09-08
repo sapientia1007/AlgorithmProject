@@ -1,46 +1,57 @@
 import java.io.*;
 import java.util.*;
 
-/*
-* 1 : 이동할 수 있는 칸 & 0 : 이동할 수 없는 칸
-* (1,1) 출발 / (N,M) 이동 => 최소의 칸 수 = BFS
-* */
-public class Main{
-    static final int[] di = {-1,0,1,0};
-    static final int[] dj = {0,1,0,-1};
+class Main {
+    static int[][] arr;
+    static int[][] dist;
+    static boolean[][] v;
+
+    static int[] di = new int[] {-1,0,1,0};
+    static int[] dj = new int[] {0,1,0,-1};
+
+    static int N, M;
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String inptLine = br.readLine();
-        int N = Integer.parseInt(inptLine.split(" ")[0]);
-        int M = Integer.parseInt(inptLine.split(" ")[1]);
-        int[][] arr = new int[N][M]; boolean[][] v = new  boolean[N][M];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken()); M = Integer.parseInt(st.nextToken());
 
-        //  배열 저장
-        for (int i=0; i<N; i++){
-            String[] inptNumbers = br.readLine().split("");
+        arr = new int[N][M];  v = new boolean[N][M]; 
+
+        for(int i=0; i<N; i++) {
+            String[] inpt = br.readLine().split("");
             for (int j=0; j<M; j++){
-                arr[i][j] = Integer.parseInt(inptNumbers[j]);
+                arr[i][j] = Integer.parseInt(inpt[j]);
             }
-        }
+        } 
 
+        System.out.println(bfs(0,0));
+    }
+
+    static int bfs(int i, int j) {
         ArrayDeque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[] {0,0});
-        v[0][0]= true;
-        while (!q.isEmpty()){
+        dist = new int[N][M];
+        q.offer(new int[] {i, j});
+        v[i][j] = true;
+        dist[i][j] = 1;
+
+        while (!q.isEmpty()) {
             int[] ij = q.poll();
-            int i = ij[0]; int j = ij[1];
+            int ii = ij[0]; int jj = ij[1];
+
+            if (ii == N-1 && jj == M-1) return dist[ii][jj];
+
             for (int d=0; d<4; d++) {
-                int ni = i + di[d];
-                int nj = j + dj[d];
-                if (0<=ni && ni<N && 0<=nj && nj<M && !v[ni][nj] && arr[ni][nj] == 1){
-                    v[ni][nj] = true;
-                    arr[ni][nj] = arr[i][j] + 1;
-                    q.offer(new int[] {ni,nj});
+                int ni = ii + di[d];
+                int nj = jj + dj[d];
+
+                if (0<=ni && ni<N && 0<=nj && nj<M && arr[ni][nj] == 1 && !v[ni][nj]) {
+                    dist[ni][nj] = dist[ii][jj]+1;
+                    q.offer(new int[] {ni, nj});
+                    v[ni][nj] = true;                   
                 }
             }
         }
-
-        System.out.println(arr[N-1][M-1]);
-        br.close();
+        return -1;
     }
 }
