@@ -1,51 +1,63 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main {
-    static int n; static int start; static int link;
-    static int MIN = Integer.MAX_VALUE;
-    static int[][] arr; static boolean[] check;
+class Main {
+    static int N;
+    static int[][] arr;
+    static boolean[] visited;
+    static int minDifference = Integer.MAX_VALUE;
 
-    static void comb(int cnt, int start){
-        if (cnt == n/2) {
-            MIN = Math.min(MIN, getRes());
-            return;
-        }
-        for (int i=start; i<n; i++){
-            check[i] = true;
-            comb(cnt+1, i+1);
-            check[i] =false;
-        }
-    }
-
-    static int getRes() {
-        int start = 0; int link = 0;
-
-        for(int i=0; i<n; i++){
-            for (int j=0; j<n; j++){
-                if (i==j) continue;
-
-                if (check[i] && check[j]) start += arr[i][j];
-                if (!check[i] && !check[j]) link+=arr[i][j];
-            }
-        }
-        return  Math.abs(start-link);
-    }
-
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
-        arr = new int[n][n];
-        check = new boolean[n];
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-            for (int j = 0; j < n; j++) {
+        N = Integer.parseInt(br.readLine()); 
+        arr = new int[N][N]; visited = new boolean[N];
+
+        for (int i=0; i<N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j=0; j<N; j++) {
                 arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        comb(0,0);
-        System.out.println(MIN);
-        br.close();
+
+        visited[0] = true;
+        divideTeam(1, 1);
+        System.out.println(minDifference);
+    }
+
+    static void divideTeam(int person, int count) {
+        if (count == N/2) {
+            calculateDifference();
+            return;
+        }
+
+        for (int i=person; i<N; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                divideTeam(i+1, count+1);
+                visited[i] = false;
+            }
         }
     }
+
+    static void calculateDifference() {
+        int startTeamScore = 0; int linkTeamScore = 0;
+
+        for (int i=0; i<N; i++) {
+            for (int j=i+1; j<N; j++) {
+                if (visited[i] && visited[j]){
+                    startTeamScore += arr[i][j] + arr[j][i];
+                }
+                else if (!visited[i] && !visited[j]) {
+                    linkTeamScore += arr[i][j] + arr[j][i];
+                }
+            }
+        }
+
+        int difference = Math.abs(startTeamScore - linkTeamScore);
+        if (difference == 0) { 
+            System.out.println(0);
+            System.exit(0);
+        }
+        minDifference = Math.min(difference, minDifference);
+    }
+}
